@@ -13,7 +13,7 @@ cp tmp/word/document.xml document.xml
 while IFS=, read -r last_name first_name email
 do
   name="$first_name $last_name"
-  qualified_file_name="${first_name}_$last_name.pdf"
+  qualified_file_name="${last_name}_$first_name.pdf"
   echo $name
   sed -i "s/$template_string/$name/g" tmp/word/document.xml
   cd tmp/ && zip -r ../$rendered_doc * && cd ..
