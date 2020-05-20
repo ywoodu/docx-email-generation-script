@@ -2,6 +2,8 @@
 
 template_name=$1
 csv_name=$2
+message_name=$3
+subject=$4
 rendered_doc="tmp.docx"
 rendered_pdf="tmp.pdf"
 template_string="AttendeeName"
@@ -23,7 +25,7 @@ do
   $libreoffice --headless --convert-to pdf $rendered_doc
   mv "$rendered_pdf" "$qualified_file_name"
   # cat message.html | mail -a "Content-Type: text/html" -s "$(echo -e "Certificate\nBcc:$bcc")" -A $qualified_file_name $email
-  mutt -e 'set content_type="text/html"' -s 'Certificate for Solar Ready Continuing Education Webinar - S-5!' -b $bcc -a "$qualified_file_name" -- "$email" <message.html
+  mutt -e 'set content_type="text/html"' -s "$subject" -b $bcc -a "$qualified_file_name" -- "$email" <$message_name
   mv "$qualified_file_name" generated_certificates/
   rm $rendered_doc
 done < "$csv_name"
